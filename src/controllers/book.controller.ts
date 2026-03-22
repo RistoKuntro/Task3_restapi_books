@@ -3,6 +3,19 @@ import { bookService } from "../services/index.js";
 import { createBookSchema, updateBookSchema } from "../validators/schemas.js";
 import { BookQuery } from "../models/index.js";
 
+export async function getAllBooks(req: Request, res: Response, next: NextFunction) {
+  try {
+    res.json(await bookService.getAllBooks(req.query as BookQuery));
+  } catch (err) { next(err); }
+}
+
+export async function createBook(req: Request, res: Response, next: NextFunction) {
+  try {
+    const data = createBookSchema.parse(req.body);
+    res.status(201).json(await bookService.createBook(data));
+  } catch (err) { next(err); }
+}
+
 export async function getBookById(req: Request, res: Response, next: NextFunction) {
   try {
     res.json(await bookService.getBookById(parseInt(req.params.id as string)));

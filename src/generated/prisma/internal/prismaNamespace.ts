@@ -384,9 +384,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Book: 'Book',
   Author: 'Author',
-  AuthorBook: 'AuthorBook'
+  Publisher: 'Publisher',
+  Genre: 'Genre',
+  Book: 'Book',
+  BookGenre: 'BookGenre',
+  Review: 'Review'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,84 +405,10 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "book" | "author" | "authorBook"
+    modelProps: "author" | "publisher" | "genre" | "book" | "bookGenre" | "review"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    Book: {
-      payload: Prisma.$BookPayload<ExtArgs>
-      fields: Prisma.BookFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.BookFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.BookFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        findFirst: {
-          args: Prisma.BookFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.BookFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        findMany: {
-          args: Prisma.BookFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
-        }
-        create: {
-          args: Prisma.BookCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        createMany: {
-          args: Prisma.BookCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.BookCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
-        }
-        delete: {
-          args: Prisma.BookDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        update: {
-          args: Prisma.BookUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        deleteMany: {
-          args: Prisma.BookDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.BookUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.BookUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
-        }
-        upsert: {
-          args: Prisma.BookUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
-        }
-        aggregate: {
-          args: Prisma.BookAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateBook>
-        }
-        groupBy: {
-          args: Prisma.BookGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BookGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.BookCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BookCountAggregateOutputType> | number
-        }
-      }
-    }
     Author: {
       payload: Prisma.$AuthorPayload<ExtArgs>
       fields: Prisma.AuthorFieldRefs
@@ -554,77 +483,373 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AuthorBook: {
-      payload: Prisma.$AuthorBookPayload<ExtArgs>
-      fields: Prisma.AuthorBookFieldRefs
+    Publisher: {
+      payload: Prisma.$PublisherPayload<ExtArgs>
+      fields: Prisma.PublisherFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.AuthorBookFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload> | null
+          args: Prisma.PublisherFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.AuthorBookFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         findFirst: {
-          args: Prisma.AuthorBookFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload> | null
+          args: Prisma.PublisherFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.AuthorBookFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         findMany: {
-          args: Prisma.AuthorBookFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>[]
+          args: Prisma.PublisherFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>[]
         }
         create: {
-          args: Prisma.AuthorBookCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         createMany: {
-          args: Prisma.AuthorBookCreateManyArgs<ExtArgs>
+          args: Prisma.PublisherCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.AuthorBookCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>[]
+          args: Prisma.PublisherCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>[]
         }
         delete: {
-          args: Prisma.AuthorBookDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         update: {
-          args: Prisma.AuthorBookUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         deleteMany: {
-          args: Prisma.AuthorBookDeleteManyArgs<ExtArgs>
+          args: Prisma.PublisherDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.AuthorBookUpdateManyArgs<ExtArgs>
+          args: Prisma.PublisherUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.AuthorBookUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>[]
+          args: Prisma.PublisherUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>[]
         }
         upsert: {
-          args: Prisma.AuthorBookUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBookPayload>
+          args: Prisma.PublisherUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublisherPayload>
         }
         aggregate: {
-          args: Prisma.AuthorBookAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthorBook>
+          args: Prisma.PublisherAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePublisher>
         }
         groupBy: {
-          args: Prisma.AuthorBookGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuthorBookGroupByOutputType>[]
+          args: Prisma.PublisherGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PublisherGroupByOutputType>[]
         }
         count: {
-          args: Prisma.AuthorBookCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuthorBookCountAggregateOutputType> | number
+          args: Prisma.PublisherCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PublisherCountAggregateOutputType> | number
+        }
+      }
+    }
+    Genre: {
+      payload: Prisma.$GenrePayload<ExtArgs>
+      fields: Prisma.GenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        findFirst: {
+          args: Prisma.GenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        findMany: {
+          args: Prisma.GenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>[]
+        }
+        create: {
+          args: Prisma.GenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        createMany: {
+          args: Prisma.GenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>[]
+        }
+        delete: {
+          args: Prisma.GenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        update: {
+          args: Prisma.GenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.GenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.GenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GenrePayload>
+        }
+        aggregate: {
+          args: Prisma.GenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGenre>
+        }
+        groupBy: {
+          args: Prisma.GenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    Book: {
+      payload: Prisma.$BookPayload<ExtArgs>
+      fields: Prisma.BookFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BookFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BookFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        findFirst: {
+          args: Prisma.BookFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BookFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        findMany: {
+          args: Prisma.BookFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
+        }
+        create: {
+          args: Prisma.BookCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        createMany: {
+          args: Prisma.BookCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BookCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
+        }
+        delete: {
+          args: Prisma.BookDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        update: {
+          args: Prisma.BookUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        deleteMany: {
+          args: Prisma.BookDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BookUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BookUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>[]
+        }
+        upsert: {
+          args: Prisma.BookUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookPayload>
+        }
+        aggregate: {
+          args: Prisma.BookAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBook>
+        }
+        groupBy: {
+          args: Prisma.BookGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BookCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookCountAggregateOutputType> | number
+        }
+      }
+    }
+    BookGenre: {
+      payload: Prisma.$BookGenrePayload<ExtArgs>
+      fields: Prisma.BookGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BookGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BookGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.BookGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BookGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        findMany: {
+          args: Prisma.BookGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>[]
+        }
+        create: {
+          args: Prisma.BookGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        createMany: {
+          args: Prisma.BookGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BookGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.BookGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        update: {
+          args: Prisma.BookGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.BookGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BookGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BookGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.BookGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.BookGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBookGenre>
+        }
+        groupBy: {
+          args: Prisma.BookGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BookGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    Review: {
+      payload: Prisma.$ReviewPayload<ExtArgs>
+      fields: Prisma.ReviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        findFirst: {
+          args: Prisma.ReviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        findMany: {
+          args: Prisma.ReviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>[]
+        }
+        create: {
+          args: Prisma.ReviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        createMany: {
+          args: Prisma.ReviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>[]
+        }
+        delete: {
+          args: Prisma.ReviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        update: {
+          args: Prisma.ReviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewPayload>
+        }
+        aggregate: {
+          args: Prisma.ReviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReview>
+        }
+        groupBy: {
+          args: Prisma.ReviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewCountAggregateOutputType> | number
         }
       }
     }
@@ -667,10 +892,50 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const AuthorScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  birthYear: 'birthYear',
+  nationality: 'nationality',
+  biography: 'biography',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
+
+
+export const PublisherScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  country: 'country',
+  foundedYear: 'foundedYear',
+  website: 'website',
+  createdAt: 'createdAt'
+} as const
+
+export type PublisherScalarFieldEnum = (typeof PublisherScalarFieldEnum)[keyof typeof PublisherScalarFieldEnum]
+
+
+export const GenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type GenreScalarFieldEnum = (typeof GenreScalarFieldEnum)[keyof typeof GenreScalarFieldEnum]
+
+
 export const BookScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  isbn: 'isbn',
   publishedYear: 'publishedYear',
+  pageCount: 'pageCount',
+  language: 'language',
+  description: 'description',
+  coverImage: 'coverImage',
+  authorId: 'authorId',
+  publisherId: 'publisherId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -678,24 +943,24 @@ export const BookScalarFieldEnum = {
 export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
 
 
-export const AuthorScalarFieldEnum = {
-  id: 'id',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+export const BookGenreScalarFieldEnum = {
+  bookId: 'bookId',
+  genreId: 'genreId'
 } as const
 
-export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
+export type BookGenreScalarFieldEnum = (typeof BookGenreScalarFieldEnum)[keyof typeof BookGenreScalarFieldEnum]
 
 
-export const AuthorBookScalarFieldEnum = {
+export const ReviewScalarFieldEnum = {
   id: 'id',
-  authorId: 'authorId',
-  bookId: 'bookId'
+  bookId: 'bookId',
+  userName: 'userName',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt'
 } as const
 
-export type AuthorBookScalarFieldEnum = (typeof AuthorBookScalarFieldEnum)[keyof typeof AuthorBookScalarFieldEnum]
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -712,6 +977,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -870,9 +1143,12 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
-  book?: Prisma.BookOmit
   author?: Prisma.AuthorOmit
-  authorBook?: Prisma.AuthorBookOmit
+  publisher?: Prisma.PublisherOmit
+  genre?: Prisma.GenreOmit
+  book?: Prisma.BookOmit
+  bookGenre?: Prisma.BookGenreOmit
+  review?: Prisma.ReviewOmit
 }
 
 /* Types for Logging */

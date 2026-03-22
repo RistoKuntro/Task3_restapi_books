@@ -8,9 +8,14 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "dev:db": "set USE_DB=true && tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed": "prisma db seed"
+    "start:db": "set USE_DB=true && node dist/server.js",
+    "seed": "prisma db seed",
+    "migrate": "prisma migrate dev --config prisma.config.ts",
+    "generate": "prisma generate --config prisma.config.ts",
+    "studio": "prisma studio --config prisma.config.ts"
   },
   "repository": {
     "type": "git",

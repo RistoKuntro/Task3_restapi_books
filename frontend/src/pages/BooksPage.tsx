@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getBooks, deleteBook, Book, Pagination, BookQuery } from '../api'
+import type { Book, Pagination, BookQuery } from '../api'
+import { getBooks, deleteBook } from '../api'
 
 export default function BooksPage() {
   const navigate = useNavigate()

@@ -1,49 +1,80 @@
 # Books API
 
-RESTful API for a library management system built with TypeScript, Express.js, Zod and Prisma ORM.
+A RESTful API and React frontend for a library management system built with TypeScript, Express.js, Zod, Prisma ORM and React.
+
+## Author
+
+Risto Kuntro
 
 ## Installation
+
 ```bash
+# Install all dependencies
 npm install
+npm install --prefix backend
+npm install --prefix frontend
 ```
 
-Copy `.env.example` to `.env` and fill in your values.
+Copy `.env.example` to `.env` in the backend folder:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+Fill in your database credentials in `backend/.env`.
 
 ## Running
 
 ### Part 1 — Mock data (no database needed)
+
 ```bash
 npm run dev
 ```
 
 ### Part 2 — PostgreSQL
+
 ```bash
+cd backend
 npm run migrate
 npm run generate
 npm run seed
+cd ..
 npm run dev:db
 ```
 
-## Features
+Both backend and frontend start at the same time:
+- Backend: http://localhost:3000
+- Frontend: http://localhost:5173
 
-### Part 1 (Mock Data)
-- **Books**: Full CRUD with filters, sorting and pagination
-- **Authors**: Full CRUD with search by name and nationality
-- **Publishers**: Full CRUD with search by name and country
-- **Reviews**: Create, read, update and delete reviews per book
-- **Genres**: Create and list genres with their books
-- **Average Rating**: Calculate average rating per book
-- **Validation**: Zod runtime validation on all inputs
-- **Error Handling**: Consistent error responses with correct HTTP status codes
+## Project Structure
 
-### Part 2 (PostgreSQL)
-- All Part 1 endpoints work with a real PostgreSQL database
-- Prisma ORM with migrations and seed data
-- Database-level filtering, sorting and pagination
+**Backend** — Express REST API
+- `src/server.ts` — Entry point
+- `src/models/` — TypeScript interfaces
+- `src/data/` — Mock data (Part 1)
+- `src/validators/` — Zod schemas
+- `src/middleware/` — Error handler and validateId
+- `src/utils/` — Pagination helper
+- `src/services/` — Mock services (Part 1)
+- `src/services/db/` — Prisma services (Part 2)
+- `src/controllers/` — HTTP request handlers
+- `src/routes/` — Express routes
+- `src/lib/prisma.ts` — Prisma client
+- `prisma/schema.prisma` — Database schema
+- `prisma/seed.ts` — Seed data
+
+**Frontend** — React application
+- `src/api.ts` — Axios client and all API functions
+- `src/main.tsx` — Router setup
+- `src/ThemeContext.tsx` — Dark mode context
+- `src/pages/BooksPage.tsx` — Books list with search and pagination
+- `src/pages/BookDetailPage.tsx` — Book detail, edit and delete
+- `src/pages/AddBookPage.tsx` — Add new book form
+- `src/components/Navbar.tsx` — Navigation and theme toggle
 
 ## API Endpoints
 
-All routes are prefixed with `/api/v1`.
+All routes prefixed with `/api/v1`.
 
 ### Books
 | Method | Endpoint | Description |
@@ -68,8 +99,6 @@ All routes are prefixed with `/api/v1`.
 | DELETE | `/authors/:id` | Delete an author |
 | GET | `/authors/:id/books` | Get books by author |
 
-**Query parameters:** `lastName`, `nationality`, `sortBy`, `order`
-
 ### Publishers
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -80,8 +109,6 @@ All routes are prefixed with `/api/v1`.
 | DELETE | `/publishers/:id` | Delete a publisher |
 | GET | `/publishers/:id/books` | Get books by publisher |
 
-**Query parameters:** `name`, `country`
-
 ### Reviews
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -91,8 +118,6 @@ All routes are prefixed with `/api/v1`.
 | PUT | `/reviews/:id` | Update a review |
 | DELETE | `/reviews/:id` | Delete a review |
 
-**Query parameters:** `rating`, `sortBy`, `order`
-
 ### Genres
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -101,29 +126,6 @@ All routes are prefixed with `/api/v1`.
 | GET | `/genres/:id` | Get genre by ID |
 | GET | `/genres/:id/books` | Get books in genre |
 
-## Project Structure
-```
-src/
-    server.ts               # Entry point
-    models/                 # TypeScript interfaces
-    data/                   # Mock data (Part 1)
-    validators/             # Zod schemas
-    middleware/
-        |__errorHandler.ts  # Global error handler
-        |__validateId.ts    # Route param validation
-    utils/
-        |__pagination.ts    # Pagination helper
-    services/               # Mock services (Part 1)
-        db/                 # Prisma services (Part 2)
-    controllers/            # HTTP request handlers
-    routes/                 # Express routes
-    lib/
-        |__prisma.ts        # Prisma client
-prisma/
-    schema.prisma           # Database schema
-    seed.ts                 # Seed data
-```
-
 ## cURL Examples
 
 ### Get all books
@@ -131,14 +133,9 @@ prisma/
 curl http://localhost:3000/api/v1/books
 ```
 
-### Filter and sort books
+### Filter and sort
 ```bash
 curl "http://localhost:3000/api/v1/books?author=martin&sortBy=publishedYear&order=desc"
-```
-
-### Paginate
-```bash
-curl "http://localhost:3000/api/v1/books?page=1&limit=5"
 ```
 
 ### Create a book
@@ -163,14 +160,4 @@ curl -X POST http://localhost:3000/api/v1/books \
 curl -X POST http://localhost:3000/api/v1/books/1/reviews \
   -H "Content-Type: application/json" \
   -d '{ "userName": "alice", "rating": 5, "comment": "Excellent!" }'
-```
-
-### Get average rating
-```bash
-curl http://localhost:3000/api/v1/books/1/average-rating
-```
-
-### Delete a book
-```bash
-curl -X DELETE http://localhost:3000/api/v1/books/1
 ```

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Author, Publisher, Genre } from '../api'
 import { createBook, getAuthors, getPublishers, getGenres } from '../api'
+import Navbar from '../components/Navbar'
 
 export default function AddBookPage() {
   const navigate = useNavigate()
@@ -82,119 +83,81 @@ export default function AddBookPage() {
       .finally(() => setSubmitting(false))
   }
 
+  const inputClass = "border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Navbar />
       <div className="max-w-2xl mx-auto p-6">
         <button
           onClick={() => navigate('/books')}
-          className="text-gray-500 hover:text-gray-800 mb-4 block transition"
+          className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white mb-4 block transition"
         >
           ← Back to books
         </button>
 
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Add New Book</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">Add New Book</h1>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-4">{error}</div>
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg mb-4">{error}</div>
         )}
 
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
           <div className="flex flex-col gap-4">
+
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Title</label>
-              <input
-                type="text"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              />
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Title</label>
+              <input type="text" value={title} onChange={e => setTitle(e.target.value)} className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">ISBN</label>
-              <input
-                type="text"
-                value={isbn}
-                onChange={e => setIsbn(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              />
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">ISBN</label>
+              <input type="text" value={isbn} onChange={e => setIsbn(e.target.value)} className={inputClass} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">Published Year</label>
-                <input
-                  type="number"
-                  value={publishedYear}
-                  onChange={e => setPublishedYear(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-                />
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Published Year</label>
+                <input type="number" value={publishedYear} onChange={e => setPublishedYear(e.target.value)} className={inputClass} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">Page Count</label>
-                <input
-                  type="number"
-                  value={pageCount}
-                  onChange={e => setPageCount(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-                />
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Page Count</label>
+                <input type="number" value={pageCount} onChange={e => setPageCount(e.target.value)} className={inputClass} />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Language</label>
-              <input
-                type="text"
-                value={language}
-                onChange={e => setLanguage(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              />
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Language</label>
+              <input type="text" value={language} onChange={e => setLanguage(e.target.value)} className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Description</label>
-              <textarea
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                rows={4}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              />
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Description</label>
+              <textarea value={description} onChange={e => setDescription(e.target.value)} rows={4} className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Author</label>
-              <select
-                value={authorId}
-                onChange={e => setAuthorId(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              >
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Author</label>
+              <select value={authorId} onChange={e => setAuthorId(e.target.value)} className={inputClass}>
                 <option value="">Select author...</option>
                 {authors.map(a => (
-                  <option key={a.id} value={a.id}>
-                    {a.firstName} {a.lastName}
-                  </option>
+                  <option key={a.id} value={a.id}>{a.firstName} {a.lastName}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Publisher</label>
-              <select
-                value={publisherId}
-                onChange={e => setPublisherId(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-              >
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Publisher</label>
+              <select value={publisherId} onChange={e => setPublisherId(e.target.value)} className={inputClass}>
                 <option value="">Select publisher...</option>
                 {publishers.map(p => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
+                  <option key={p.id} value={p.id}>{p.name}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Genres</label>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Genres</label>
               <div className="flex flex-wrap gap-2">
                 {genres.map(g => (
                   <button
@@ -203,8 +166,8 @@ export default function AddBookPage() {
                     onClick={() => toggleGenre(g.id)}
                     className={`px-3 py-1 rounded-full text-sm border transition ${
                       selectedGenres.includes(g.id)
-                        ? 'bg-gray-800 text-white border-gray-800'
-                        : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
+                        ? 'bg-gray-800 dark:bg-white text-white dark:text-gray-900 border-gray-800 dark:border-white'
+                        : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-400'
                     }`}
                   >
                     {g.name}
@@ -217,17 +180,18 @@ export default function AddBookPage() {
               <button
                 onClick={handleSubmit}
                 disabled={submitting}
-                className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 transition"
+                className="bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-100 disabled:opacity-50 transition"
               >
                 {submitting ? 'Creating...' : 'Create Book'}
               </button>
               <button
                 onClick={() => navigate('/books')}
-                className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 transition"
+                className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-6 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
               >
                 Cancel
               </button>
             </div>
+
           </div>
         </div>
       </div>

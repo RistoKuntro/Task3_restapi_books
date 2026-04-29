@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Book, Pagination, BookQuery } from '../api'
 import { getBooks, deleteBook } from '../api'
+import Navbar from '../components/Navbar'
 
 export default function BooksPage() {
   const navigate = useNavigate()
@@ -57,13 +58,14 @@ export default function BooksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Navbar />
       <div className="max-w-5xl mx-auto p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Books</h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Books</h1>
           <button
             onClick={() => navigate('/books/new')}
-            className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+            className="bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-100 transition"
           >
             Add Book
           </button>
@@ -76,21 +78,21 @@ export default function BooksPage() {
             placeholder="Search by title..."
             value={title}
             onChange={e => { setTitle(e.target.value); setPage(1) }}
-            className="border border-gray-200 rounded-lg px-3 py-2 w-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
           />
           <input
             type="text"
             placeholder="Language..."
             value={language}
             onChange={e => { setLanguage(e.target.value); setPage(1) }}
-            className="border border-gray-200 rounded-lg px-3 py-2 w-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
           />
           <input
             type="number"
             placeholder="Year..."
             value={year}
             onChange={e => { setYear(e.target.value); setPage(1) }}
-            className="border border-gray-200 rounded-lg px-3 py-2 w-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
           />
           <select
             value={`${sortBy}-${order}`}
@@ -100,7 +102,7 @@ export default function BooksPage() {
               setOrder(o)
               setPage(1)
             }}
-            className="border border-gray-200 rounded-lg px-3 py-2 w-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
           >
             <option value="-asc">Sort by...</option>
             <option value="title-asc">Title A-Z</option>
@@ -110,28 +112,25 @@ export default function BooksPage() {
           </select>
         </div>
 
-        {/* Loading */}
         {loading && (
           <div className="text-center py-10 text-gray-400">Loading...</div>
         )}
 
-        {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-4">{error}</div>
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg mb-4">{error}</div>
         )}
 
-        {/* Books grid */}
         {!loading && !error && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {books.map(book => (
-              <div key={book.id} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
-                <h2 className="text-lg font-semibold text-gray-800">{book.title}</h2>
-                <p className="text-gray-500 text-sm mt-1">
+              <div key={book.id} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-white">{book.title}</h2>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                   {book.author?.firstName} {book.author?.lastName} · {book.publishedYear}
                 </p>
                 <div className="flex flex-wrap gap-1 mt-3">
                   {book.genres?.map(g => (
-                    <span key={g.id} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full border border-gray-200">
+                    <span key={g.id} className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700">
                       {g.name}
                     </span>
                   ))}
@@ -139,13 +138,13 @@ export default function BooksPage() {
                 <div className="flex gap-2 mt-4">
                   <button
                     onClick={() => navigate(`/books/${book.id}`)}
-                    className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg hover:bg-gray-200 text-sm transition"
+                    className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-sm transition"
                   >
                     View
                   </button>
                   <button
                     onClick={() => handleDelete(book.id)}
-                    className="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-100 text-sm transition border border-red-100"
+                    className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 text-sm transition border border-red-100 dark:border-red-900"
                   >
                     Delete
                   </button>
@@ -155,28 +154,26 @@ export default function BooksPage() {
           </div>
         )}
 
-        {/* Empty state */}
         {!loading && !error && books.length === 0 && (
           <div className="text-center py-10 text-gray-400">No books found</div>
         )}
 
-        {/* Pagination */}
         {pagination && pagination.totalPages > 1 && (
           <div className="flex justify-center items-center gap-3 mt-8">
             <button
               onClick={() => setPage(p => p - 1)}
               disabled={!pagination.hasPreviousPage}
-              className="px-4 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 disabled:opacity-40 hover:bg-gray-50 transition"
+              className="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
             >
               Previous
             </button>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
               Page {pagination.currentPage} of {pagination.totalPages}
             </span>
             <button
               onClick={() => setPage(p => p + 1)}
               disabled={!pagination.hasNextPage}
-              className="px-4 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 disabled:opacity-40 hover:bg-gray-50 transition"
+              className="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
             >
               Next
             </button>

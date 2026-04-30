@@ -23,6 +23,35 @@ cp backend/.env.example backend/.env
 
 Fill in your database credentials in `backend/.env`.
 
+## Environment Setup
+
+After cloning the repo you need to create two `.env` files manually, they are not included in Git for security reasons.
+
+**1. Backend — create `backend/.env`:**
+
+```bash
+DB_HOST=dev.vk.edu.ee
+DB_PORT=5432
+DB_NAME=dbYourname
+DB_USER=username
+DB_PASSWORD=password
+DB_SCHEMA=books_api
+
+DATABASE_URL=postgresql://username:password@dev.vk.edu.ee:5432/dbYourname?schema=books_api
+
+PORT=3000
+NODE_ENV=development
+USE_DB=false
+```
+
+**2. Frontend — create `frontend/.env`:**
+
+```bash
+VITE_API_URL=http://localhost:3000/api/v1
+```
+
+Both `.env.example` files are included in the repo as templates.
+
 ## Running
 
 ### Part 1 — Mock data (no database needed)
